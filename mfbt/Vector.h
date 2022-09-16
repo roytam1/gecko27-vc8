@@ -21,6 +21,7 @@
 #include "mozilla/TemplateLib.h"
 #include "mozilla/TypeTraits.h"
 #include "mozilla/Util.h" // for PointerRangeSize
+#include "mozilla/PodOperations.h"
 
 #include <new> // for placement new
 
@@ -159,6 +160,10 @@ struct VectorImpl<T, N, AP, ThisVector, true>
        */
       for (const U* p = srcbeg; p < srcend; ++p, ++dst)
         *dst = *p;
+    }
+
+    static inline void copyConstruct(wchar_t* dst, const wchar_t* srcbeg, const wchar_t* srcend) {
+      mozilla::PodCopy(dst, srcbeg, srcend - srcbeg);
     }
 
     template<typename U>

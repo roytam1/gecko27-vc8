@@ -1471,7 +1471,7 @@ XPCJSRuntime::~XPCJSRuntime()
     }
 #endif
 
-    auto rtPrivate = static_cast<PerThreadAtomCache*>(JS_GetRuntimePrivate(Runtime()));
+    PerThreadAtomCache* rtPrivate = static_cast<PerThreadAtomCache*>(JS_GetRuntimePrivate(Runtime()));
     delete rtPrivate;
     JS_SetRuntimePrivate(Runtime(), nullptr);
 
@@ -2966,7 +2966,7 @@ XPCJSRuntime::XPCJSRuntime(nsXPConnect* aXPConnect)
     MOZ_ASSERT(Runtime());
     JSRuntime* runtime = Runtime();
 
-    auto rtPrivate = new PerThreadAtomCache();
+    PerThreadAtomCache* rtPrivate = new PerThreadAtomCache();
     memset(rtPrivate, 0, sizeof(PerThreadAtomCache));
     JS_SetRuntimePrivate(runtime, rtPrivate);
 

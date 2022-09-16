@@ -48,6 +48,7 @@
 #include "nsTString.h"
 #include "string-template-undef.h"
 
+#if !defined(_MSC_VER) || _MSC_VER >= 1600
 static_assert(sizeof(PRUnichar) == 2, "size of PRUnichar must be 2");
 static_assert(sizeof(nsString::char_type) == 2,
               "size of nsString::char_type must be 2");
@@ -55,6 +56,7 @@ static_assert(nsString::char_type(-1) > nsString::char_type(0),
               "nsString::char_type must be unsigned");
 static_assert(sizeof(nsCString::char_type) == 1,
               "size of nsCString::char_type must be 1");
+#endif
 
 
   /**

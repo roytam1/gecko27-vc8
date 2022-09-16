@@ -573,9 +573,11 @@ class nsCOMPtr MOZ_FINAL
             : NSCAP_CTOR_BASE(static_cast<T*>(aSmartPtr.mRawPtr))
           // construct from |dont_AddRef(expr)|
         {
+#if !defined(_MSC_VER) || _MSC_VER >= 1600
           // But make sure that U actually inherits from T
           static_assert(mozilla::IsBaseOf<T, U>::value,
                         "U is not a subclass of T");
+#endif
           NSCAP_LOG_ASSIGNMENT(this, static_cast<T*>(aSmartPtr.mRawPtr));
           NSCAP_ASSERT_NO_QUERY_NEEDED();
         }
@@ -663,9 +665,11 @@ class nsCOMPtr MOZ_FINAL
       operator=( const already_AddRefed<U>& rhs )
           // assign from |dont_AddRef(expr)|
         {
+#if !defined(_MSC_VER) || _MSC_VER >= 1600
           // Make sure that U actually inherits from T
           static_assert(mozilla::IsBaseOf<T, U>::value,
                         "U is not a subclass of T");
+#endif
           assign_assuming_AddRef(static_cast<T*>(rhs.mRawPtr));
           NSCAP_ASSERT_NO_QUERY_NEEDED();
           return *this;
