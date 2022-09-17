@@ -12,6 +12,10 @@
 #include "mozilla/Attributes.h"
 #include "nscore.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 namespace IPC {
 template <typename T> struct ParamTraits;
 }

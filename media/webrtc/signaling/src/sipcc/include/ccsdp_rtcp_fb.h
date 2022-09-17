@@ -5,6 +5,12 @@
 #ifndef __CCSDP_RTCP_FB_H__
 #define __CCSDP_RTCP_FB_H__
 
+#ifdef __cplusplus
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+#endif
+
 /* a=rtcp-fb enumerations */
 
 typedef enum {

@@ -9,6 +9,10 @@
 #include "mozilla/Assertions.h"
 #include "mozilla/TypeTraits.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 // NOTE: the long lines in this file are intentional to make compiler error
 // messages more readable.
 
@@ -24,7 +28,7 @@
 
 #define NS_QUERYFRAME_ENTRY(class)                              \
   case class::kFrameIID: {                                      \
-    static_assert(mozilla::IsSame<class, class::Has_NS_DECL_QUERYFRAME_TARGET>::value, \
+    static_assert((mozilla::IsSame<class, class::Has_NS_DECL_QUERYFRAME_TARGET>::value), \
                   #class " must declare itself as a queryframe target"); \
     return static_cast<class*>(this);                           \
   }
@@ -32,7 +36,7 @@
 #define NS_QUERYFRAME_ENTRY_CONDITIONAL(class, condition)       \
   case class::kFrameIID:                                        \
   if (condition) {                                              \
-    static_assert(mozilla::IsSame<class, class::Has_NS_DECL_QUERYFRAME_TARGET>::value, \
+    static_assert((mozilla::IsSame<class, class::Has_NS_DECL_QUERYFRAME_TARGET>::value), \
                   #class " must declare itself as a queryframe target"); \
     return static_cast<class*>(this);                           \
   }                                                             \
@@ -81,7 +85,7 @@ public:
 
   template<class Dest>
   operator Dest*() {
-    static_assert(mozilla::IsSame<Dest, typename Dest::Has_NS_DECL_QUERYFRAME_TARGET>::value,
+    static_assert((mozilla::IsSame<Dest, typename Dest::Has_NS_DECL_QUERYFRAME_TARGET>::value),
                   "Dest must declare itself as a queryframe target");
     if (!mRawPtr)
       return nullptr;

@@ -31,6 +31,10 @@ __declspec(dllimport) unsigned long __stdcall TlsAlloc();
 #include "mozilla/Attributes.h"
 #include "mozilla/NullPtr.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 namespace mozilla {
 
 // sig_safe_t denotes an atomic type which can be read or stored in a single

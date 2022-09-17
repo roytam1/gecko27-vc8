@@ -11,6 +11,10 @@
 #include "mozilla/ReentrantMonitor.h"
 #include "nsIRunnable.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 // A threadsafe FIFO event queue...
 class nsEventQueue
 {

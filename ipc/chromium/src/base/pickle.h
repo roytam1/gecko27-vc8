@@ -11,6 +11,10 @@
 #include "base/logging.h"
 #include "base/string16.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 // This class provides facilities for basic binary value packing and unpacking.
 //
 // The Pickle class supports appending primitive values (ints, strings, etc.)

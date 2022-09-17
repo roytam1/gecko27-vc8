@@ -16,6 +16,10 @@
 
 #include "mozilla/StandardInteger.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 namespace mozilla {
 
 /*

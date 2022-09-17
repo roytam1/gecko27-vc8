@@ -32,6 +32,10 @@
 
 #include "nsWrapperCacheInlines.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 class nsPIDOMWindow;
 
 extern nsresult
@@ -1383,7 +1387,7 @@ template <class T>
 struct
 WantsQueryInterface
 {
-  static_assert(IsBaseOf<nsISupports, T>::value,
+  static_assert((IsBaseOf<nsISupports, T>::value),
                 "QueryInterface can't work without an nsISupports.");
   static bool Enabled(JSContext* aCx, JSObject* aGlobal)
   {
@@ -1479,14 +1483,14 @@ private:
     static void StaticAsserts() {
       static_assert(sizeof(FakeDependentString) == sizeof(nsDependentString),
                     "Must have right object size");
-      static_assert(offsetof(FakeDependentString, mData) ==
-                      offsetof(DepedentStringAsserter, mData),
+      static_assert((offsetof(FakeDependentString, mData) ==
+                      offsetof(DepedentStringAsserter, mData)),
                     "Offset of mData should match");
-      static_assert(offsetof(FakeDependentString, mLength) ==
-                      offsetof(DepedentStringAsserter, mLength),
+      static_assert((offsetof(FakeDependentString, mLength) ==
+                      offsetof(DepedentStringAsserter, mLength)),
                     "Offset of mLength should match");
-      static_assert(offsetof(FakeDependentString, mFlags) ==
-                      offsetof(DepedentStringAsserter, mFlags),
+      static_assert((offsetof(FakeDependentString, mFlags) ==
+                      offsetof(DepedentStringAsserter, mFlags)),
                     "Offset of mFlags should match");
     }
   };

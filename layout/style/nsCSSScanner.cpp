@@ -14,6 +14,10 @@
 #include "mozilla/Util.h"
 #include <algorithm>
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 using mozilla::ArrayLength;
 
 /* Character class tables and related helper functions. */

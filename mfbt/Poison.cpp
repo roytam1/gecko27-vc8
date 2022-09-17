@@ -26,6 +26,10 @@
 # endif
 #endif
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 extern "C" {
 uintptr_t gMozillaPoisonValue;
 uintptr_t gMozillaPoisonBase;

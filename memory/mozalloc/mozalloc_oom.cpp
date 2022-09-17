@@ -13,6 +13,10 @@
 #include "mozilla/mozalloc_oom.h"
 #include "mozilla/Assertions.h"
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 static mozalloc_oom_abort_handler gAbortHandler;
 
 #define OOM_MSG_LEADER "out of memory: 0x"

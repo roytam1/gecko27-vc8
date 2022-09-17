@@ -112,6 +112,10 @@
   DISALLOW_COPY_AND_ASSIGN(TypeName)
 #endif
 
+#include "boost/static_assert.hpp"
+#undef static_assert
+#define static_assert BOOST_STATIC_ASSERT_MSG
+
 namespace double_conversion {
 
 static const int kCharSize = sizeof(char);
