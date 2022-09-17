@@ -18,7 +18,7 @@
 #define js_TypeDecls_h
 
 #include <stddef.h>
-#include <stdint.h>
+#include "mozilla/StandardInteger.h"
 
 struct JSContext;
 class JSFunction;

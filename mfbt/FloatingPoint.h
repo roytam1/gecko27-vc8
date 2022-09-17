@@ -14,7 +14,7 @@
 #include "mozilla/Casting.h"
 #include "mozilla/Types.h"
 
-#include <stdint.h>
+#include "mozilla/StandardInteger.h"
 
 namespace mozilla {
 

@@ -13,7 +13,7 @@
 #ifndef simpletokenbucket_h__
 #define simpletokenbucket_h__
 
-#include <stdint.h>
+#include "mozilla/StandardInteger.h"
 
 #include "prinrval.h"
 

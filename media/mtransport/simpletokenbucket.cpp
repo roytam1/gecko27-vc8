@@ -8,7 +8,7 @@
 
 #include "simpletokenbucket.h"
 
-#include <stdint.h>
+#include "mozilla/StandardInteger.h"
 
 #include "prinrval.h"
 

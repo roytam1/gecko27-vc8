@@ -9,7 +9,7 @@
 #include "mozilla/Likely.h"
 #include "mozilla/TypedEnum.h"
 
-#include <stdint.h>
+#include "mozilla/StandardInteger.h"
 
 /*
  * To add error code to your module, you need to do the following:
