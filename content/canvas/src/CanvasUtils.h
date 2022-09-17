@@ -24,14 +24,6 @@ class HTMLCanvasElement;
 namespace CanvasUtils {
 
 
-void GetImageData_component(uint8_t* _src, uint8_t* _dst,
-                            int32_t width, int32_t height,
-                            uint32_t srcStride, uint32_t dstStride);
-
-void PutImageData_component(uint8_t* _src, uint8_t* _dst,
-                            int32_t width, int32_t height,
-                            uint32_t srcStride, uint32_t dstStride);
-
 // Check that the rectangle [x,y,w,h] is a subrectangle of [0,0,realWidth,realHeight]
 
 inline bool CheckSaneSubrectSize(int32_t x, int32_t y, int32_t w, int32_t h,

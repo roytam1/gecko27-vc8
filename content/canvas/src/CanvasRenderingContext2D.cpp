@@ -3622,7 +3622,29 @@ CanvasRenderingContext2D::GetImageDataArray(JSContext* aCx,
   // inherited from Thebes canvas and is no longer true
   uint8_t* dst = data + dstWriteRect.y * (aWidth * 4) + dstWriteRect.x * 4;
 
-  GetImageData_component(src, dst, dstWriteRect.width, dstWriteRect.height, srcStride, aWidth * 4);
+  for (int32_t j = 0; j < dstWriteRect.height; ++j) {
+    for (int32_t i = 0; i < dstWriteRect.width; ++i) {
+      // XXX Is there some useful swizzle MMX we can use here?
+#ifdef IS_LITTLE_ENDIAN
+      uint8_t b = *src++;
+      uint8_t g = *src++;
+      uint8_t r = *src++;
+      uint8_t a = *src++;
+#else
+      uint8_t a = *src++;
+      uint8_t r = *src++;
+      uint8_t g = *src++;
+      uint8_t b = *src++;
+#endif
+      // Convert to non-premultiplied color
+      *dst++ = gfxUtils::sUnpremultiplyTable[a * 256 + r];
+      *dst++ = gfxUtils::sUnpremultiplyTable[a * 256 + g];
+      *dst++ = gfxUtils::sUnpremultiplyTable[a * 256 + b];
+      *dst++ = a;
+    }
+    src += srcStride - (dstWriteRect.width * 4);
+    dst += (aWidth * 4) - (dstWriteRect.width * 4);
+  }
 
   *aRetval = darray;
   return NS_OK;
@@ -3753,7 +3775,27 @@ CanvasRenderingContext2D::PutImageData_explicit(int32_t x, int32_t y, uint32_t w
   uint8_t *src = aData;
   uint8_t *dst = imgsurf->Data();
 
-  PutImageData_component(src, dst, w, h, w * 4, w * 4);
+  for (uint32_t j = 0; j < h; j++) {
+    for (uint32_t i = 0; i < w; i++) {
+      uint8_t r = *src++;
+      uint8_t g = *src++;
+      uint8_t b = *src++;
+      uint8_t a = *src++;
+
+      // Convert to premultiplied color (losslessly if the input came from getImageData)
+#ifdef IS_LITTLE_ENDIAN
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + b];
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + g];
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + r];
+      *dst++ = a;
+#else
+      *dst++ = a;
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + r];
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + g];
+      *dst++ = gfxUtils::sPremultiplyTable[a * 256 + b];
+#endif
+    }
+  }
 
   EnsureTarget();
   if (!IsTargetValid()) {
