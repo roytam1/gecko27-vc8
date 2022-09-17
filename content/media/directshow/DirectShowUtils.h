@@ -11,6 +11,10 @@
 #include "DShowTools.h"
 #include "prlog.h"
 
+#if defined(_MSC_VER) && _MSC_VER < 1600
+#define nullptr NULL
+#endif
+
 namespace mozilla {
 
 // Win32 "Event" wrapper. Must be paired with a CriticalSection to create a
