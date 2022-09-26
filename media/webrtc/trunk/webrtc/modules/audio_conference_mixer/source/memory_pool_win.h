@@ -96,7 +96,7 @@ MemoryPoolImpl<MemoryType>::~MemoryPoolImpl()
 template<class MemoryType>
 int32_t MemoryPoolImpl<MemoryType>::PopMemory(MemoryType*& memory)
 {
-    PSLIST_ENTRY pListEntry = InterlockedPopEntrySList(_pListHead);
+    PSLIST_ENTRY pListEntry = InterlockedPopEntrySList_kex(_pListHead);
     if(pListEntry == NULL)
     {
         MemoryPoolItem<MemoryType>* item = CreateMemory();
@@ -139,7 +139,7 @@ int32_t MemoryPoolImpl<MemoryType>::PushMemory(MemoryType*& memory)
         --_createdMemory;
         return 0;
     }
-    InterlockedPushEntrySList(_pListHead,&(item->itemEntry));
+    InterlockedPushEntrySList_kex(_pListHead,&(item->itemEntry));
     return 0;
 }
 
@@ -152,7 +152,7 @@ bool MemoryPoolImpl<MemoryType>::Initialize()
     {
         return false;
     }
-    InitializeSListHead(_pListHead);
+    InitializeSListHead_kex(_pListHead);
     return true;
 }
 
@@ -160,7 +160,7 @@ template<class MemoryType>
 int32_t MemoryPoolImpl<MemoryType>::Terminate()
 {
     int32_t itemsFreed = 0;
-    PSLIST_ENTRY pListEntry = InterlockedPopEntrySList(_pListHead);
+    PSLIST_ENTRY pListEntry = InterlockedPopEntrySList_kex(_pListHead);
     while(pListEntry != NULL)
     {
         MemoryPoolItem<MemoryType>* item = ((MemoryPoolItem<MemoryType>*)pListEntry);
@@ -168,7 +168,7 @@ int32_t MemoryPoolImpl<MemoryType>::Terminate()
         AlignedFree(item);
         --_createdMemory;
         itemsFreed++;
-        pListEntry = InterlockedPopEntrySList(_pListHead);
+        pListEntry = InterlockedPopEntrySList_kex(_pListHead);
     }
     return itemsFreed;
 }
