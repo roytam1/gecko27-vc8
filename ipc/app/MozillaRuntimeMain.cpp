@@ -109,7 +109,7 @@ main(int argc, char* argv[])
     // the details.
     if (proctype != GeckoProcessType_Plugin) {
         mozilla::SanitizeEnvironmentVariables();
-        SetDllDirectory(L"");
+        mozilla::NS_SetDllDirectory(L"");
     }
 #endif
 
