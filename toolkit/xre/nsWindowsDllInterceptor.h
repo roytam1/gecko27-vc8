@@ -61,10 +61,7 @@
  */
 
 #include "mozilla/StandardInteger.h"
-
-#if defined(_MSC_VER) && _MSC_VER < 1600
-#define nullptr NULL
-#endif
+#include "mozilla/NullPtr.h"
 
 namespace mozilla {
 namespace internal {
