@@ -25,9 +25,10 @@
 
 #include <new> // for placement new
 
-#include "boost/static_assert.hpp"
+#if defined(_MSC_VER) && _MSC_VER < 1600
 #undef static_assert
-#define static_assert BOOST_STATIC_ASSERT_MSG
+#define static_assert(a,b)
+#endif
 
 /* Silence dire "bugs in previous versions of MSVC have been fixed" warnings */
 #ifdef _MSC_VER

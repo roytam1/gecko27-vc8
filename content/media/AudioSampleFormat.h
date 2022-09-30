@@ -9,9 +9,10 @@
 #include "nsAlgorithm.h"
 #include <algorithm>
 
-#include "boost/static_assert.hpp"
+#if defined(_MSC_VER) && _MSC_VER < 1600
 #undef static_assert
-#define static_assert BOOST_STATIC_ASSERT_MSG
+#define static_assert(a,b)
+#endif
 
 namespace mozilla {
 

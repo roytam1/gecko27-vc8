@@ -16,9 +16,10 @@
 #include "nsStyleStructFwd.h"
 #include "nsCSSKeywords.h"
 
-#include "boost/static_assert.hpp"
+#if defined(_MSC_VER) && _MSC_VER < 1600
 #undef static_assert
-#define static_assert BOOST_STATIC_ASSERT_MSG
+#define static_assert(a,b)
+#endif
 
 // Flags for ParseVariant method
 #define VARIANT_KEYWORD         0x000001  // K
