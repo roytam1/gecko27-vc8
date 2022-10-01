@@ -3664,6 +3664,8 @@ class MRandom : public MNullaryInstruction
     bool possiblyCalls() const {
         return true;
     }
+
+    void computeRange();
 };
 
 class MMathFunction
@@ -3751,6 +3753,7 @@ class MMathFunction
                || function_ == ASin || function_ == ACos;
     }
     void trySpecializeFloat32();
+    void computeRange();
 };
 
 class MAdd : public MBinaryArithInstruction
@@ -5262,6 +5265,7 @@ class MBoundsCheck
     virtual AliasSet getAliasSet() const {
         return AliasSet::None();
     }
+    void computeRange();
 };
 
 // Bailout if index < minimum.
@@ -5619,6 +5623,7 @@ class MArrayPush
     AliasSet getAliasSet() const {
         return AliasSet::Store(AliasSet::Element | AliasSet::ObjectFields);
     }
+    void computeRange();
 };
 
 // Array.prototype.concat on two dense arrays.
